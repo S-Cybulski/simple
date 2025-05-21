@@ -31,3 +31,6 @@ class Token:
         self.lexeme = lexeme
         self.literal = literal
         self.line = line
+
+    def __str__(self):
+        return f"{self.type.name} '{self.lexeme}' ({self.literal}) on line {self.line}"
