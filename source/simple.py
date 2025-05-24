@@ -2,6 +2,8 @@ import sys
 from pathlib import Path
 from scanner import Scanner
 from tokens import TokenType, Token
+from parser import Parser
+from interpreter import Interpreter
 
 class Simple:
     had_error = False
@@ -10,11 +12,21 @@ class Simple:
         try:
             scanner = Scanner(source)
             tokens = scanner.scan_tokens()
-            for token in tokens:
-                print(token)
+            
+            parser = Parser(tokens)
+            expr = parser.parse()
+            
+            interpreter = Interpreter()
+            result = interpreter.evaluate(expr)
+            
+            print(result)
+            
         except SyntaxError as e:
             print(f"Syntax error: {e}")
-            had_error = True
+            Simple.had_error = True
+        except RuntimeError as e:
+            print(f"Runtime error: {e}")
+            Simple.had_error = True
     
     def run_file(filename: str):
         path = Path(filename).absolute()
