@@ -51,6 +51,28 @@ class Scanner:
             self.add_token(TokenType.RIGHT_PAREN)
         elif char.isdigit():
             self.number()
+        elif char == '=':
+            if self.match('='):
+                self.add_token(TokenType.EQUAL_EQUAL)
+            else:
+                raise SyntaxError(f"Unexpected '=' at line {self.line}")
+        elif char == '!':
+            if self.match('='):
+                self.add_token(TokenType.BANG_EQUAL)
+            else:
+                self.add_token(TokenType.BANG)
+        elif char == '<':
+            if self.match('='):
+                self.add_token(TokenType.LESS_EQUAL)
+            else:
+                self.add_token(TokenType.LESS)
+        elif char == '>':
+            if self.match('='):
+                self.add_token(TokenType.GREATER_EQUAL)
+            else:
+                self.add_token(TokenType.GREATER)
+        elif char.isalpha():
+            self.identifier()
         else:
             raise SyntaxError(f'Unexpected character: {char} at line {self.line}')
         
@@ -71,16 +93,36 @@ class Scanner:
         token_type = TokenType.FLOAT if is_float else TokenType.INTEGER
         self.add_token(token_type, value)
     
+    def match(self, expected: str):
+        if self.is_at_end() or self.peek() != expected:
+            return False
+
+        self.advance()
+        return True
+    
+    def identifier(self):
+        
+        keywords = {
+            "TRUE": TokenType.TRUE,
+            "FALSE": TokenType.FALSE,
+            "AND": TokenType.AND,
+            "OR": TokenType.OR
+        }
+        
+        while self.peek().isalnum():
+            self.advance()
+
+        text: str = self.source[self.start:self.current]
+        type: TokenType = keywords.get(text)
+        
+        if type is None:
+            raise SyntaxError(f"Unknown identifier: {text} at line {self.line}")
+    
+        self.add_token(type)
+    
     def scan_tokens(self):
         while not self.is_at_end():
             self.start = self.current
             self.scan_token()
         self.tokens.append(Token(TokenType.EOF, '', None, self.line))
         return self.tokens
-
-if __name__ == "__main__":
-    expr = "3 + 4 * (2 - 1) / 5.0"
-    scanner = Scanner(expr)
-    tokens = scanner.scan_tokens()
-    for token in tokens:
-        print(token)
