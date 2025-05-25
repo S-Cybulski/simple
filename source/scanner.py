@@ -103,22 +103,23 @@ class Scanner:
     def identifier(self):
         
         keywords = {
-            "TRUE": TokenType.TRUE,
-            "FALSE": TokenType.FALSE,
-            "AND": TokenType.AND,
-            "OR": TokenType.OR
+            "TRUE": (TokenType.TRUE, True),
+            "FALSE": (TokenType.FALSE, False),
+            "AND": (TokenType.AND, None),
+            "OR": (TokenType.OR, None)
         }
         
         while self.peek().isalnum():
             self.advance()
 
-        text: str = self.source[self.start:self.current]
-        type: TokenType = keywords.get(text)
+        text = self.source[self.start:self.current]
+        result = keywords.get(text)
         
-        if type is None:
+        if result is None:
             raise SyntaxError(f"Unknown identifier: {text} at line {self.line}")
-    
-        self.add_token(type)
+
+        type_, literal = result
+        self.add_token(type_, literal)
     
     def scan_tokens(self):
         while not self.is_at_end():

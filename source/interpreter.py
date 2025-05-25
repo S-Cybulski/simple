@@ -14,6 +14,8 @@ class Interpreter:
 
             if operator == '-':
                 return -right
+            elif operator == '!':
+                return not right
             raise RuntimeError(f"Unknown unary operator {operator}")
 
         elif isinstance(expr, Binary):
@@ -31,6 +33,23 @@ class Interpreter:
                 if right == 0:
                     raise RuntimeError("Division by zero.")
                 return left / right
+            elif operator == '<':
+                return left < right
+            elif operator == '<=':
+                return left <= right
+            elif operator == '>':
+                return left > right
+            elif operator == '>=':
+                return left >= right
+            elif operator == '==':
+                return left == right
+            elif operator == '!=':
+                return left != right
+
+            elif operator == 'AND':
+                return bool(left) and bool(right)
+            elif operator == 'OR':
+                return bool(left) or bool(right)
             else:
                 raise RuntimeError(f"Unknown binary operator {operator}")
 

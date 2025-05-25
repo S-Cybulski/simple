@@ -13,7 +13,7 @@ class Parser:
         return self.expression()
     
     def expression(self):
-        return self.addition()
+        return self.logic_or()
 
     def addition(self):
         expr = self.multiplication()
@@ -34,7 +34,7 @@ class Parser:
         return expr
     
     def unary(self):
-        if self.match(TokenType.MINUS):
+        if self.match(TokenType.MINUS, TokenType.BANG):
             operator = self.previous()
             right = self.unary()
             return Unary(operator, right)
@@ -43,6 +43,10 @@ class Parser:
     def primary(self):
         if self.match(TokenType.INTEGER, TokenType.FLOAT):
             return Literal(self.previous().literal)
+        if self.match(TokenType.TRUE):
+            return Literal(True)
+        if self.match(TokenType.FALSE):
+            return Literal(False)
         if self.match(TokenType.LEFT_PAREN):
             expr = self.expression()
             self.consume(TokenType.RIGHT_PAREN, "Expect ')' after expression.")
@@ -55,10 +59,10 @@ class Parser:
             return True
         return False
 
-    def consume(self, expected):
+    def consume(self, expected, message):
         if self.check(expected):
             return self.advance()
-        raise ParseError(f"Expected token '{expected}' but found '{self.peek().type}'.")
+        raise ParseError(message)
 
     def check(self, *types):
         if self.is_at_end():
@@ -80,3 +84,35 @@ class Parser:
 
     def previous(self):
         return self.tokens[self.current - 1]
+    
+    def logic_or(self):
+        expr = self.logic_and()
+        while self.match(TokenType.OR):
+            operator = self.previous()
+            right = self.logic_and()
+            expr = Binary(expr, operator, right)
+        return expr
+    
+    def logic_and(self):
+        expr = self.equality()
+        while self.match(TokenType.AND):
+            operator = self.previous()
+            right = self.equality()
+            expr = Binary(expr, operator, right)
+        return expr
+
+    def equality(self):
+        expr = self.comparison()
+        while self.match(TokenType.EQUAL_EQUAL, TokenType.BANG_EQUAL):
+            operator = self.previous()
+            right = self.comparison()
+            expr = Binary(expr, operator, right)
+        return expr
+
+    def comparison(self):
+        expr = self.addition()
+        while self.match(TokenType.GREATER, TokenType.GREATER_EQUAL, TokenType.LESS, TokenType.LESS_EQUAL):
+            operator = self.previous()
+            right = self.addition()
+            expr = Binary(expr, operator, right)
+        return expr

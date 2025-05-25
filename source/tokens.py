@@ -6,17 +6,34 @@ class TokenType(Enum):
     NUMBER = 'NUMBER'
     INTEGER = 'INT'
     FLOAT = 'FLOAT'
+    TRUE = 'TRUE'
+    FALSE = 'FALSE'
     
     # single-character tokens operators
     PLUS = '+'
     MINUS = '-'
     STAR = '*'
     SLASH = '/'
+    BANG = '!'
+    EQUAL = '='
+    GREATER = '>'
+    LESS = '<'
+    
+    #two-character tokens operators
+    BANG_EQUAL = '!='
+    EQUAL_EQUAL = '=='
+    GREATER_EQUAL = '>='
+    LESS_EQUAL = '<='
+    
+    #logical tokens operators
+    AND = 'AND'
+    OR = 'OR'
 
     #single-character tokens grouping
     LEFT_PAREN = '('
     RIGHT_PAREN = ')'
 
+    #special tokens
     EOF = ''
 
 class Token:
