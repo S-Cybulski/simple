@@ -57,7 +57,7 @@ class Scanner:
             if self.match('='):
                 self.add_token(TokenType.EQUAL_EQUAL)
             else:
-                raise SyntaxError(f"Unexpected '=' at line {self.line}")
+                self.add_token(TokenType.EQUAL)
         elif char == '!':
             if self.match('='):
                 self.add_token(TokenType.BANG_EQUAL)
@@ -122,7 +122,8 @@ class Scanner:
             "TRUE": (TokenType.TRUE, True),
             "FALSE": (TokenType.FALSE, False),
             "AND": (TokenType.AND, None),
-            "OR": (TokenType.OR, None)
+            "OR": (TokenType.OR, None),
+            "PRINT": (TokenType.PRINT, None)
         }
         
         while self.peek().isalnum():
@@ -131,12 +132,13 @@ class Scanner:
         text = self.source[self.start:self.current]
         result = keywords.get(text)
         
-        if result is None:
-            raise SyntaxError(f"Unknown identifier: {text} at line {self.line}")
 
-        type_, literal = result
-        self.add_token(type_, literal)
-    
+        if result:
+            type_, literal = result
+            self.add_token(type_, literal)
+        else:
+            self.add_token(TokenType.IDENTIFIER, text)
+        
     def scan_tokens(self):
         while not self.is_at_end():
             self.start = self.current

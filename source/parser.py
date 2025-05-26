@@ -1,4 +1,4 @@
-from expressions import Literal, Unary, Binary, Grouping
+from expressions import Literal, Unary, Binary, Grouping, Variable, Assign, Print
 from tokens import Token, TokenType
 
 class ParseError(Exception):
@@ -10,10 +10,49 @@ class Parser:
         self.current = 0
     
     def parse(self):
+        statements = []
+        while not self.is_at_end():
+            if self.check(TokenType.NEWLINE):
+                self.advance()
+                continue
+            statements.append(self.statement())
+            if self.match(TokenType.NEWLINE):
+                continue
+            if self.check(TokenType.EOF):
+                break
+        return statements
+    
+    def statement(self):
+        if self.match(TokenType.PRINT):
+            expr = self.expression()
+            return Print(expr)
         return self.expression()
     
+    def print_statement(self):
+        value = self.expression()
+        return Print(value)
+    
+    def expression_statement(self):
+        expr = self.expression()
+        return expr
+    
     def expression(self):
-        return self.logic_or()
+        return self.assignment()
+    
+    def assignment(self):
+        expr = self.logic_or()
+
+        if self.match(TokenType.EQUAL):
+            equals = self.previous()
+            value = self.assignment()
+
+            if isinstance(expr, Variable):
+                name = expr.name
+                return Assign(name, value)
+
+            raise ParseError("Invalid assignment target.")
+
+        return expr
 
     def addition(self):
         expr = self.multiplication()
@@ -49,6 +88,8 @@ class Parser:
             return Literal(self.previous().literal)
         if self.match(TokenType.FALSE):
             return Literal(False)
+        if self.match(TokenType.IDENTIFIER):
+            return Variable(self.previous())
         if self.match(TokenType.LEFT_PAREN):
             expr = self.expression()
             self.consume(TokenType.RIGHT_PAREN, "Expect ')' after expression.")

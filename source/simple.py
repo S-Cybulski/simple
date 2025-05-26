@@ -14,12 +14,10 @@ class Simple:
             tokens = scanner.scan_tokens()
             
             parser = Parser(tokens)
-            expr = parser.parse()
+            statements = parser.parse()
             
             interpreter = Interpreter()
-            result = interpreter.evaluate(expr)
-            
-            print(result)
+            interpreter.interpret(statements)
             
         except SyntaxError as e:
             print(f"Syntax error: {e}")

@@ -8,6 +8,8 @@ class TokenType(Enum):
     FLOAT = 'FLOAT'
     TRUE = 'TRUE'
     FALSE = 'FALSE'
+    PRINT = 'PRINT'
+    IDENTIFIER = 'IDENTIFIER'
     
     # single-character tokens operators
     PLUS = '+'
@@ -35,6 +37,7 @@ class TokenType(Enum):
     RIGHT_PAREN = ')'
 
     #special tokens
+    NEWLINE = '\n'
     EOF = ''
 
 class Token:

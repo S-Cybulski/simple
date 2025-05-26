@@ -19,5 +19,16 @@ class Binary(Expr):
 class Grouping(Expr):
     def __init__(self, expression):
         self.expression = expression
+
+class Print:
+    def __init__(self, expression):
+        self.expression = expression
         
-        
+class Variable:
+    def __init__(self, name):
+        self.name = name
+
+class Assign:
+    def __init__(self, name, value):
+        self.name = name
+        self.value = value
