@@ -28,6 +28,8 @@ class Parser:
             return Print(expr)
         elif self.match(TokenType.WHILE):
             return self.while_statement()
+        elif self.match(TokenType.IF):
+            return self.if_statement()
         return self.expression()
     
     def print_statement(self):
@@ -48,6 +50,29 @@ class Parser:
         self.consume(TokenType.RIGHT_BRACE, "Expect '}' after while body.")
         
         return While(condition, body)
+
+    def if_statement(self):
+        self.consume(TokenType.LEFT_PAREN, "Expect '(' after 'if'.")
+        condition = self.expression()
+        self.consume(TokenType.RIGHT_PAREN, "Expect ')' after condition.")
+        self.consume(TokenType.LEFT_BRACE, "Expect '{' before if body.")
+        
+        then_branch = []
+        
+        while not self.check(TokenType.RIGHT_BRACE) and not self.is_at_end():
+            then_branch.append(self.statement())
+        
+        self.consume(TokenType.RIGHT_BRACE, "Expect '}' after if body.")
+        
+        else_branch = None
+        if self.match(TokenType.ELSE):
+            self.consume(TokenType.LEFT_BRACE, "Expect '{' before else body.")
+            else_branch = []
+            while not self.check(TokenType.RIGHT_BRACE) and not self.is_at_end():
+                else_branch.append(self.statement())
+            self.consume(TokenType.RIGHT_BRACE, "Expect '}' after else body.")
+        
+        return If(condition, then_branch, else_branch)
     
     def expression_statement(self):
         expr = self.expression()

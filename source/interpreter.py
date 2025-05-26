@@ -23,6 +23,14 @@ class Interpreter:
                 for stmt in statement.body:
                     self.execute(stmt)
         
+        elif isinstance(statement, If):
+            if self.evaluate(statement.condition):
+                for stmt in statement.then_branch:
+                    self.execute(stmt)
+            elif statement.else_branch:
+                for stmt in statement.else_branch:
+                    self.execute(stmt)
+        
         else:
             self.evaluate(statement)
         

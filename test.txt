@@ -1,5 +1,11 @@
-x = 0
-WHILE (x < 3) {
-    PRINT x
-    x = x + 1
+x = 2
+IF (x < 3) {
+    PRINT "outer if"
+    IF (x == 2) {
+        PRINT "nested if"
+    } ELSE {
+        PRINT "nested else"
+    }
+} ELSE {
+    PRINT "outer else"
 }

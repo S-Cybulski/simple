@@ -20,6 +20,12 @@ class Grouping(Expr):
     def __init__(self, expression):
         self.expression = expression
 
+class If:
+    def __init__(self, condition, then_branch, else_branch=None):
+        self.condition = condition
+        self.then_branch = then_branch
+        self.else_branch = else_branch
+
 class Print:
     def __init__(self, expression):
         self.expression = expression
