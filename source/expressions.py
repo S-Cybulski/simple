@@ -32,3 +32,8 @@ class Assign:
     def __init__(self, name, value):
         self.name = name
         self.value = value
+
+class While:
+    def __init__(self, condition, body):
+        self.condition = condition
+        self.body = body

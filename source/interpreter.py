@@ -1,4 +1,4 @@
-from expressions import Literal, Unary, Binary, Grouping, Variable, Assign, Print
+from expressions import *
 
 class Interpreter:
     def __init__(self):
@@ -17,6 +17,11 @@ class Interpreter:
             value = self.evaluate(statement.value)
             self.environment.assign(statement.name.lexeme, value)
             return value
+
+        elif isinstance(statement, While):
+            while self.evaluate(statement.condition):
+                for stmt in statement.body:
+                    self.execute(stmt)
         
         else:
             self.evaluate(statement)

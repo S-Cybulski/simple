@@ -1,4 +1,4 @@
-from expressions import Literal, Unary, Binary, Grouping, Variable, Assign, Print
+from expressions import *
 from tokens import Token, TokenType
 
 class ParseError(Exception):
@@ -26,11 +26,28 @@ class Parser:
         if self.match(TokenType.PRINT):
             expr = self.expression()
             return Print(expr)
+        elif self.match(TokenType.WHILE):
+            return self.while_statement()
         return self.expression()
     
     def print_statement(self):
         value = self.expression()
         return Print(value)
+    
+    def while_statement(self):
+        self.consume(TokenType.LEFT_PAREN, "Expect '(' after 'while'.")
+        condition = self.expression()
+        self.consume(TokenType.RIGHT_PAREN, "Expect ')' after condition.")
+        self.consume(TokenType.LEFT_BRACE, "Expect '{' before while body.")
+        
+        body = []
+        
+        while not self.check(TokenType.RIGHT_BRACE) and not self.is_at_end():
+            body.append(self.statement())
+        
+        self.consume(TokenType.RIGHT_BRACE, "Expect '}' after while body.")
+        
+        return While(condition, body)
     
     def expression_statement(self):
         expr = self.expression()

@@ -1,13 +1,5 @@
-floattest = 1.0
-floattest = floattest + 5
-PRINT floattest
-
-StringTest = "Cat"
-
-StringTest = StringTest + "DOG"
-
-PRINT StringTest
-
-errorTest = 5
-errorTest = errorTest + "insert string here"
-PRINT errorTest
+x = 0
+WHILE (x < 3) {
+    PRINT x
+    x = x + 1
+}

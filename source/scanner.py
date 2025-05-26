@@ -49,6 +49,10 @@ class Scanner:
             self.add_token(TokenType.LEFT_PAREN)
         elif char == ')':
             self.add_token(TokenType.RIGHT_PAREN)
+        elif char == '{':
+            self.add_token(TokenType.LEFT_BRACE)
+        elif char == '}':
+            self.add_token(TokenType.RIGHT_BRACE)
         elif char == '"':
             self.string()
         elif char.isdigit():
@@ -123,7 +127,8 @@ class Scanner:
             "FALSE": (TokenType.FALSE, False),
             "AND": (TokenType.AND, None),
             "OR": (TokenType.OR, None),
-            "PRINT": (TokenType.PRINT, None)
+            "PRINT": (TokenType.PRINT, None),
+            "WHILE": (TokenType.WHILE, None)
         }
         
         while self.peek().isalnum():

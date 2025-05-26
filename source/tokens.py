@@ -10,6 +10,9 @@ class TokenType(Enum):
     FALSE = 'FALSE'
     PRINT = 'PRINT'
     IDENTIFIER = 'IDENTIFIER'
+    WHILE = 'WHILE'
+    IF = 'IF'
+    ELSE = 'ELSE'
     
     # single-character tokens operators
     PLUS = '+'
@@ -35,6 +38,9 @@ class TokenType(Enum):
     #single-character tokens grouping
     LEFT_PAREN = '('
     RIGHT_PAREN = ')'
+    LEFT_BRACE = '{'
+    RIGHT_BRACE = '}'
+    
 
     #special tokens
     NEWLINE = '\n'
