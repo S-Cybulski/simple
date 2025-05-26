@@ -49,6 +49,8 @@ class Scanner:
             self.add_token(TokenType.LEFT_PAREN)
         elif char == ')':
             self.add_token(TokenType.RIGHT_PAREN)
+        elif char == '"':
+            self.string()
         elif char.isdigit():
             self.number()
         elif char == '=':
@@ -92,6 +94,20 @@ class Scanner:
         value = float(text) if is_float else int(text)
         token_type = TokenType.FLOAT if is_float else TokenType.INTEGER
         self.add_token(token_type, value)
+    
+    def string(self):
+        while self.peek() != '"' and not self.is_at_end():
+            if self.peek() == '\n':
+                self.line += 1
+            self.advance()
+
+        if self.is_at_end():
+            raise SyntaxError(f"Unterminated string at line {self.line}")
+
+        self.advance()
+        
+        value = self.source[self.start + 1:self.current - 1]
+        self.add_token(TokenType.STRING, value)
     
     def match(self, expected: str):
         if self.is_at_end() or self.peek() != expected:

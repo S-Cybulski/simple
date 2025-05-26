@@ -18,6 +18,7 @@ class TokenType(Enum):
     EQUAL = '='
     GREATER = '>'
     LESS = '<'
+    STRING = '"'
     
     #two-character tokens operators
     BANG_EQUAL = '!='
