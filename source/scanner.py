@@ -130,7 +130,8 @@ class Scanner:
             "PRINT": (TokenType.PRINT, None),
             "WHILE": (TokenType.WHILE, None),
             "IF": (TokenType.IF, None),
-            "ELSE": (TokenType.ELSE, None)
+            "ELSE": (TokenType.ELSE, None),
+            "INPUT": (TokenType.INPUT, None)
         }
         
         while self.peek().isalnum():

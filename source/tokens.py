@@ -13,6 +13,7 @@ class TokenType(Enum):
     WHILE = 'WHILE'
     IF = 'IF'
     ELSE = 'ELSE'
+    INPUT = 'INPUT'
     
     # single-character tokens operators
     PLUS = '+'

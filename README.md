@@ -1,43 +1,47 @@
-### 1.0 Defining the Language
+### Turing Complete Language Parser and Interpreter
 
-statement -> expression | keyword expression | identifier equality expression
+#### How to Run Interpreter:
 
-expression -> literal | grouping | unary | binary
+From terminal and in root directory(/simple)
 
-literal -> NUMBER | STRING | "TRUE" | "FALSE" | NULL
+``` python3 source/simple.txt ```
 
-grouping -> "(" expression ")"
+or
 
-unary -> ("-" | "!") expression
+``` python3 source/simple.txt example.txt```
 
-binary -> expression operator expression
+#### Stage 1: Basic Calculator (0-20%):
+The interpreter supports arithmetic expressions using:
+- Real numbers(integers and decimals)
+- Unary negation ('-')
+- Parentheses for grouping e.g (5 + 3) * 2
+- Binary operators: '+', '-', '*', '/'
 
+Example File: calculator.txt
 
-operator -> "==" | "!=" | "<" | "<=" | ">" | ">=" | "+" | "-" | "*" | "/" | "AND" | "OR" 
+#### Stage 2: Boolean Logic (20-40%):
+The interpreter supports boolean values (true and false) and operations:
+- Comparison: '==', '!=', '<', '<=', '>', '>='
+- Logical: 'AND', 'OR', '!'
 
-Arithmetic operations:
+Example File: boolean.txt
 
-Binary add (+) 
-Binary subtract (-) 
-Binary multiply (*) 
-Binary division (/) 
-Unary negation (-)
+#### Stage 3: Text Values (40-50%):
+String literals are enclosed in double quotes ("string"). The language supports:
+- String concatenation with +
+- String equality and inequality
 
-Binary and (AND) 
-Binary or (OR) 
-Unary negation (!)
+Example File: string.txt
 
-Global variables (any alphanumeric key starting with an alpha, that is not a keyword)
+#### Stage 4: Global Data (50-60%):
+Global variables can be created, read, updated and printed. variables types can include:
+- Numbers
+- Booleans
+- Strings
 
-IF expression THEN
-    Path 1
-ELSE
-    Path 2
-ENDIF
+Example File: variables.txt
 
-
-
-WHILE expression THEN
-    Loop body
-ENDWHILE
-
+#### Stage 5: Control Flow(60-80%):
+The language supports:
+- IF statements (with or without ELSE)
+- WHILE loops

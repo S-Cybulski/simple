@@ -1,0 +1,8 @@
+A = 10
+B = A + 5
+C = "doggos"
+D = C + " are cute"
+PRINT A
+PRINT B
+PRINT C
+PRINT D

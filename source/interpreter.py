@@ -91,8 +91,15 @@ class Interpreter:
             value = self.evaluate(expr.value)
             self.environment.assign(expr.name.lexeme, value)
             return value
+        
+        elif isinstance(expr, Input):
+            return self.evaluate_input(expr)
         else:
             raise RuntimeError(f"Unknown expression type {type(expr)}")
+    
+    def evaluate_input(self, expr):
+        prompt = self.evaluate(expr.prompt)
+        return input(str(prompt))
 
 class Environment:
     def __init__(self):

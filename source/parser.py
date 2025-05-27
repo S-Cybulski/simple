@@ -136,6 +136,12 @@ class Parser:
             expr = self.expression()
             self.consume(TokenType.RIGHT_PAREN, "Expect ')' after expression.")
             return Grouping(expr)
+        if self.match(TokenType.INPUT):
+            self.consume(TokenType.LEFT_PAREN, "Expect '(' after 'INPUT'")
+            prompt = self.expression()
+            self.consume(TokenType.RIGHT_PAREN, "Expect ')' after input prompt.")
+            return Input(prompt)
+        
         raise ParseError("Expect expression.")
     
     def match(self, *types):

@@ -20,6 +20,10 @@ class Grouping(Expr):
     def __init__(self, expression):
         self.expression = expression
 
+class Input:
+    def __init__(self, prompt):
+        self.prompt = prompt
+
 class If:
     def __init__(self, condition, then_branch, else_branch=None):
         self.condition = condition

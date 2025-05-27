@@ -1,0 +1,3 @@
+PRINT "Hello" + " " + "World"
+PRINT "foo" + "bar" == "foobar"
+PRINT "10 corgis" != "10" + "corgis"
