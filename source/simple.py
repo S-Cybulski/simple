@@ -6,8 +6,10 @@ from parser import Parser
 from interpreter import Interpreter
 
 class Simple:
-    had_error = False
     
+    had_error = False
+
+    # rins the Simple interpreter with the provided source code.    
     def run(source: str):
         try:
             scanner = Scanner(source)
@@ -26,13 +28,15 @@ class Simple:
             print(f"Runtime error: {e}")
             Simple.had_error = True
     
+    # Runs a Simple script from a file. If an error occurs, it exits with code 65.
     def run_file(filename: str):
         path = Path(filename).absolute()
         source = path.read_text()
         Simple.run(source)
         if Simple.had_error:
             sys.exit(65)
-            
+
+    # A simple Read-Eval-Print Loop (REPL) for the Simple interpreter.   
     def repl():
         print("Simple REPL. type 'exit' to quit.")
         while True:

@@ -1,13 +1,18 @@
 from expressions import *
 
 class Interpreter:
+    """
+    Executes the parsed statements by evaluating expressions and managing the environment for variable storage and retrieval.
+    """
     def __init__(self):
         self.environment = Environment()
-        
+    
+    # Interpret a list of statements, executing each one in sequence.
     def interpret(self, statements):
         for statement in statements:
             self.execute(statement)
     
+    # Execute a single statement, handling different types of statements like Print, Assign, While, If, etc.
     def execute(self, statement):
         if isinstance(statement, Print):
             value = self.evaluate(statement.expression)
@@ -33,7 +38,8 @@ class Interpreter:
         
         else:
             self.evaluate(statement)
-        
+    
+    # Evaluate an expression, handling different types of expressions like Literal, Unary, Binary, Grouping, Variable, Assign, and Input.
     def evaluate(self, expr):
         if isinstance(expr, Literal):
             return expr.value
@@ -102,6 +108,9 @@ class Interpreter:
         return input(str(prompt))
 
 class Environment:
+    """
+    Manages variable storage and retrieval, allowing for variable assignment and lookup.
+    """
     def __init__(self):
         self.values = {}
 

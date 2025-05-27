@@ -1,9 +1,0 @@
-isrunning = TRUE
-count = 0
-
-WHILE (isrunning == TRUE) {
-    item = INPUT("Enter item: ")
-    IF (item == "") { isrunning = FALSE } ELSE { count = count + 1 }
-}
-
-PRINT "Items entered: " + count 

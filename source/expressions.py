@@ -1,22 +1,21 @@
-class Expr:
-    pass
+""" This file defines AST (Abstract Syntax Tree) classes for various expressions in a programming language. """
 
-class Literal(Expr):
+class Literal:
     def __init__(self, value):
         self.value = value
 
-class Unary(Expr):
+class Unary:
     def __init__(self, operator, right):
         self.operator = operator
         self.right = right
 
-class Binary(Expr):
+class Binary:
     def __init__(self, left, operator, right):
         self.left = left
         self.operator = operator
         self.right = right
 
-class Grouping(Expr):
+class Grouping:
     def __init__(self, expression):
         self.expression = expression
 

@@ -1,6 +1,10 @@
 from tokens import Token, TokenType
 
 class Scanner:
+    """
+    A simple scanner that tokenizes a source code string.
+    It recognizes various token types such as operators, literals, identifiers, and control flow keywords.
+    """
     def __init__(self, source: str):
         self.source = source
         self.tokens = []
@@ -8,29 +12,35 @@ class Scanner:
         self.current = 0
         self.line = 1
     
+    # Checks if the scanner has reached the end of the source code.
     def is_at_end(self):
         return self.current >= len(self.source)
     
+    # Advances the current position in the source code and returns the character at that position.
     def advance(self):
         char = self.source[self.current]
         self.current += 1
         return char
 
+    # Returns the previous character in the source code without advancing.
     def peek(self):
         if self.is_at_end():
             return '\0'
         return self.source[self.current]
 
+    # Returns the character after the current position without advancing.
     def peek_next(self):
         if self.current + 1 >= len(self.source):
             return '\0'
         return self.source[self.current + 1]
 
+    # Adds a token to the list of tokens with the specified type and optional literal value.
     def add_token(self, typ, literal=None):
         text = self.source[self.start:self.current]
         token = Token(typ, text, literal, self.line)
         self.tokens.append(token)
 
+    # Scans the next character in the source code and determines its token type.
     def scan_token(self):
         char =self.advance()
         if char in ' \r\t':
@@ -81,7 +91,8 @@ class Scanner:
             self.identifier()
         else:
             raise SyntaxError(f'Unexpected character: {char} at line {self.line}')
-        
+    
+    # Parses a number from the source code, which can be an integer or a float.
     def number(self):
         while self.peek().isdigit():
             self.advance()
@@ -99,6 +110,7 @@ class Scanner:
         token_type = TokenType.FLOAT if is_float else TokenType.INTEGER
         self.add_token(token_type, value)
     
+    # Parses a string literal from the source code, which is enclosed in double quotes.
     def string(self):
         while self.peek() != '"' and not self.is_at_end():
             if self.peek() == '\n':
@@ -113,6 +125,7 @@ class Scanner:
         value = self.source[self.start + 1:self.current - 1]
         self.add_token(TokenType.STRING, value)
     
+    # Matches the next character in the source code with the expected character.
     def match(self, expected: str):
         if self.is_at_end() or self.peek() != expected:
             return False
@@ -120,6 +133,7 @@ class Scanner:
         self.advance()
         return True
     
+    # Parses identifiers and keywords from the source code.
     def identifier(self):
         
         keywords = {
@@ -146,7 +160,8 @@ class Scanner:
             self.add_token(type_, literal)
         else:
             self.add_token(TokenType.IDENTIFIER, text)
-        
+    
+    # Scans the entire source code and returns a list of tokens.
     def scan_tokens(self):
         while not self.is_at_end():
             self.start = self.current

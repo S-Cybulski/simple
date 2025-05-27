@@ -48,6 +48,9 @@ class TokenType(Enum):
     EOF = ''
 
 class Token:
+    """
+    Represents a token in the source code.
+    """
     def __init__(
             self,
             typ: TokenType,
