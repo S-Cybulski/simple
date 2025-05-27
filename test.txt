@@ -1,11 +1,34 @@
-x = 2
-IF (x < 3) {
-    PRINT "outer if"
-    IF (x == 2) {
-        PRINT "nested if"
-    } ELSE {
-        PRINT "nested else"
-    }
-} ELSE {
-    PRINT "outer else"
+x = 0
+y = 5
+z = x + y * 2
+PRINT z
+
+IF (z == 10) {
+    PRINT "z is 10"
 }
+
+IF (x > y) {
+    PRINT "x > y"
+} ELSE {
+    PRINT "x <= y"
+}
+
+IF (y == 5) {
+    IF (z == 10) {
+        PRINT "Nested: y is 5 and z is 10"
+    }
+}
+
+i = 0
+WHILE (i < 3) {
+    PRINT i
+    i = i + 1
+}
+
+a = TRUE
+b = FALSE
+IF (a AND !b) {
+    PRINT "Logic works"
+}
+
+PRINT (1 + 2) * 3
