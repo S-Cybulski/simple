@@ -10,6 +10,39 @@ or
 
 ``` python3 source/simple.txt example.txt```
 
+##### Syntax:
+1. keywords must all be capitalised e.g:
+- PRINT
+- IF
+- ELSE
+- WHILE
+- TRUE
+- FALSE
+- INPUT
+- AND
+- OR
+
+2. Variables can be named whatever without underscores or special characters.
+
+3. Supported expressions:
+- +, -, *, /
+- AND, OR, !(unary negation)
+- ==, !=, <, >, <=, >=
+- ()
+
+Example:
+```
+isrunning = TRUE
+count = 0
+
+WHILE (isrunning == TRUE) {
+    item = INPUT("Enter item: ")
+    IF (item == "") { isrunning = FALSE } ELSE { count = count + 1 }
+}
+
+PRINT "Items entered: " + count 
+```
+
 #### Stage 1: Basic Calculator (0-20%):
 The interpreter supports arithmetic expressions using:
 - Real numbers(integers and decimals)
@@ -45,3 +78,8 @@ Example File: variables.txt
 The language supports:
 - IF statements (with or without ELSE)
 - WHILE loops
+- INPUT("prompt") for user input
+- Nested If statements
+
+Example File: shopping.txt
+

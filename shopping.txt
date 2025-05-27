@@ -1,0 +1,13 @@
+isRunning = TRUE
+shoppingList = ""
+
+WHILE (isRunning == TRUE) {
+    item = INPUT("Add an item: ")
+    IF (item == "") {
+        isRunning = FALSE
+    } ELSE {
+        shoppingList = shoppingList + ", " + item
+    }
+}
+
+PRINT shoppingList
