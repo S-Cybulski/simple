@@ -32,15 +32,20 @@ or
 
 Example:
 ```
-isrunning = TRUE
-count = 0
+isRunning = TRUE
+shoppingList = ""
 
-WHILE (isrunning == TRUE) {
-    item = INPUT("Enter item: ")
-    IF (item == "") { isrunning = FALSE } ELSE { count = count + 1 }
+WHILE (isRunning == TRUE) {
+    item = INPUT("Add an item: ")
+    IF (item == "") {
+        isRunning = FALSE
+    } ELSE {
+        shoppingList = shoppingList + ", " + item
+    }
 }
 
-PRINT "Items entered: " + count 
+PRINT shoppingList
+
 ```
 
 #### Stage 1: Basic Calculator (0-20%):
